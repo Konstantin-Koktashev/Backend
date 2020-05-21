@@ -7,7 +7,7 @@ module.exports = {
 }
 
 // Database Name
-const dbName = 'tester_db';
+const dbName = 'sunday';
 
 var dbConn = null;
 
@@ -22,6 +22,7 @@ async function connect() {
         const client = await MongoClient.connect(config.dbURL, {useNewUrlParser: true});
         const db = client.db(dbName);
         dbConn = db;
+        console.log('connected')
         return db;
     } catch(err) {
         console.log('Cannot Connect to DB', err)
