@@ -7,7 +7,7 @@ async function getboard(req, res) {
 }
   
 async function getboards(req, res) {
-    console.log(req.query);
+    // console.log(req.query);
     const boards = await boardService.query(req.query)
     logger.debug(boards);
     res.send(boards)
