@@ -6,6 +6,7 @@ async function login(req, res) {
     try {
         const user = await authService.login(email, password)
         req.session.user = user;
+        req.session.user.lastSeenAt = Date.now()
         res.json(user)
         res.redirect('/');
     } catch (err) {
