@@ -2,19 +2,18 @@
 module.exports = connectSockets
 
 function connectSockets(io) {
+
     io.on('connection', socket => {
-        socket.on('chat newMsg', msg=>{
-            console.log(msg)
-            // io.emit('chat addMsg', msg)
-            // emits only to sockets in the same room
-            io.to(socket.myTopic).emit('chat addMsg', msg)
+        socket.on('doRefresh', msg=>{
+            io.to(socket.boardId).emit('doRefresh', msg)
         })
-        socket.on('chat topic', topic=>{
-            if (socket.myTopic) {
-                socket.leave(socket.myTopic)
+        socket.on('boardViewed', boardId=>{
+            console.log('i reecived boardId' , boardId)
+            if (socket.boardId) {
+                socket.leave(socket.boarId)
             }
-            socket.join(topic)
-            socket.myTopic = topic;
+            socket.join(boardId)
+            socket.boardId = boardId;
         })
     })
 }
