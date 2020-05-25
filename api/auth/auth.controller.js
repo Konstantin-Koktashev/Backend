@@ -8,7 +8,8 @@ async function login(req, res) {
         req.session.user = user;
         req.session.user.lastSeenAt = Date.now()
         res.json(user)
-        res.redirect('/');
+        // res.redirect('/');
+        // res.end()
     } catch (err) {
         res.status(401).send({ error: err })
     }
