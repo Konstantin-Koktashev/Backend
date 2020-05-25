@@ -43,7 +43,9 @@ function connectSockets(io) {
 
         socket.on('join_private_room', obj => {
             console.log('some1 joining to privar room')
+
             let roomKey = _getRoomById(obj)
+            console.log("connectSockets -> roomKey", roomKey)
             if (socket.roomIdMap[roomKey]) {
                 socket.leave(socket.roomIdMap[roomKey])
             }
@@ -53,21 +55,23 @@ function connectSockets(io) {
 
         // on 'board_room_new_msg' - broadcast msg
 
-        socket.on('private_room_new_msg', msg => {
-            console.log('some1 send a priv msg' , msg.data.text , 'author', msg.data.author)
-            socket.to(socket.roomIdMap[roomKey]).emit('private_room_new_msg', msg)
+        socket.on('private_room_new_msg', data => {
+            console.log("connectSockets -> data", data)
+            let roomKey = _getRoomById(data)
+            // console.log('some1 send a priv msg', msg.data.text, 'author', msg.data.author)
+            socket.to(socket.roomIdMap[roomKey]).emit('private_room_new_msg', data.msg)
         })
 
 
 
-        
+
 
     });
 
 }
 
 
-function _getRoomById(obj){
+function _getRoomById(obj) {
     let arr = [];
     arr.push(obj.id.myId)
     arr.push(obj.id.otherId)
