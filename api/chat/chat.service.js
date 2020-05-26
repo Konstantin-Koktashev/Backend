@@ -5,9 +5,8 @@ const ObjectId = require('mongodb').ObjectId
 
 module.exports = {
     query,
-
     remove,
-
+    update,
     add
 }
 
@@ -24,6 +23,21 @@ async function query() {
 }
 
 
+async function update(roomObj) {
+    const collection = await dbService.getCollection('chat')
+    roomObj._id = ObjectId(roomObj._id);
+
+    try {
+        await collection.replaceOne({"_id":roomObj._id}, {$set : roomObj})
+        return roomObj
+    } catch (err) {
+        console.log(`ERROR: cannot update roomObj ${roomObj._id}`)
+        throw err;
+    }
+}
+
+
+
 async function remove(chatId) {
     const collection = await dbService.getCollection('chat')
     try {
@@ -36,11 +50,11 @@ async function remove(chatId) {
 
 
 
-async function add(msg) {
+async function add(roomObj) {
     const collection = await dbService.getCollection('chat')
     try {
-        await collection.insertOne(msg);
-        return msg;
+        await collection.insertOne(roomObj);
+        return roomObj;
     } catch (err) {
         console.log(`ERROR: cannot insert msg`)
         throw err;

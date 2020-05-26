@@ -1,6 +1,6 @@
 const express = require('express')
 const { requireAuth, requireAdmin } = require('../../middlewares/requireAuth.middleware')
-const { getChat, deleteChat, addMsg } = require('./chat.controller')
+const { getChat, deleteChat, addMsg , updateRoomChat} = require('./chat.controller')
 const router = express.Router()
 
 // middleware that is specific to this router
@@ -8,7 +8,7 @@ const router = express.Router()
 
 // router.get('/', getboards)
 router.get('/:id', getChat)
-// router.put('/:id', requireAuth, updateboard)
+router.put('/:id', requireAuth, updateRoomChat)
 router.post('/', requireAuth, addMsg)
 router.delete('/:id', requireAuth, deleteChat)
 
