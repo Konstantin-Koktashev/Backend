@@ -13,7 +13,7 @@ module.exports = {
 async function query() {
     const collection = await dbService.getCollection('chat')
     try {
-        const chat = await collection.toArray();
+        const chat = await collection.find().toArray();
 
         return chat
     } catch (err) {
@@ -47,7 +47,18 @@ async function remove(chatId) {
         throw err;
     }
 }
+async function update(chat) {
+    const collection = await dbService.getCollection('chat')
+    chat._id = ObjectId(chat._id);
 
+    try {
+        await collection.replaceOne({ "_id": chat._id }, { $set: chat })
+        return chat
+    } catch (err) {
+        console.log(`ERROR: cannot update chat ${chat._id}`)
+        throw err;
+    }
+}
 
 
 async function add(roomObj) {

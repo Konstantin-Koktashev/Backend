@@ -41,8 +41,8 @@ const connectSockets = require('./api/socket/socket.routes')
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
-app.use('/api/board' , boardRoutes)
-app.use('/api/chat' , chatRoutes)
+app.use('/api/board', boardRoutes)
+app.use('/api/chat', chatRoutes)
 connectSockets(io)
 
 
