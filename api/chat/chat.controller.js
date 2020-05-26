@@ -14,12 +14,17 @@ async function deleteChat(req, res) {
     res.end()
 }
 
+async function updateChat(req, res) {
+    const chat = req.body;
+    await chatService.update(chat)
+    res.send(chat)
+}
 
-
-async function addMsg(req ,res){
+async function addMsg(req, res) {
+    console.log('add msg ', req.body)
     const msg = req.body;
     await chatService.add(msg)
     res.send(msg)
 }
 
-module.exports = { getChat, deleteChat, addMsg }
+module.exports = { getChat, deleteChat, addMsg, updateChat }
