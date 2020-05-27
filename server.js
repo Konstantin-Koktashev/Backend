@@ -1,5 +1,5 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -10,8 +10,10 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 // Express App Config
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 app.use(cookieParser())
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
