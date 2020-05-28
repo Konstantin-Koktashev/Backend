@@ -19,7 +19,6 @@ let onlineUsers = []
 
 
 
-
 function getOnlineUsers() {
     console.log("getOnlineUsers -> onlineUsers", onlineUsers)
     return JSON.stringify(onlineUsers)

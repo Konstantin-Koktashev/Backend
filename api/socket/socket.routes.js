@@ -62,25 +62,9 @@ function connectSockets(io) {
             socket.to(socket.roomIdMap[roomKey]).emit('private_room_new_msg', data.msg)
         })
 
-        //// ONLINE USER SOCKETS
-        socket.on('USER_ONLINE', data => {
-            console.log('user Is online')
-
-            if (socket.onlineUsers[data._id]) {
-                socket.leave(socket.onlineUsers[data._id])
-            }
-            socket.join(data._id)
-
-        })
-
-        // socket.on('user_update', data => {
-        //     let roomKey = _getRoomById(data)
-        //     // console.log('some1 send a priv msg', msg.data.text, 'author', msg.data.author)
-        //     socket.to(socket.roomIdMap[roomKey]).emit('private_room_new_msg', data.msg)
-        // })
-
-
-        socket.on('login', (user) => {
+        // ONLINE USER SOCKETS
+        socket.on('login', (data) => {
+            const user = data
             userService.addUserToOnlineList(user)
             let onlineUserList = userService.getOnlineUsers()
             console.log("connectSockets -> onlineUserList", onlineUserList)
@@ -96,30 +80,15 @@ function connectSockets(io) {
 }
 
 
+
+
+
+
 function _getRoomById(obj) {
     let arr = [];
     arr.push(obj.id.myId)
     arr.push(obj.id.otherId)
     let roomKey = arr.sort().join('')
-
     return roomKey
 }
 
-// //joininig board room -
-// 	front: emit 'join_board_room', with boardId
-//     (NICE TO HAVE BUT NO TIME) on ...
-// back : on 'join_board_room' - add the socket to boardId room
-//                 also remove if in another boardId room
-
-// sending message in board room -
-// front: emit 'board_room_new_msg', with msg
-//        on 'board_room_new_msg', add in state msgs
-// back : on 'board_room_new_msg' - broadcast msg
-// join private chat
-// front: emit 'join_private_room', with { myId: myId, otherId: otherId }
-// back: on 'join_private_room' create unique room id with [myId, otherId].sort().join('');
-//     socket.roomIdMap[.. id ? ..]
-// sending message
-// front: emit 'private_room_new_msg', with { myId: myId, otherId: otherId, msg }
-//     on: 'private_room_new_msg' add in state msgs
-// back: on 'private_room_new_msg', create id -> broadcast to room with msg
