@@ -7,8 +7,13 @@ module.exports = {
     query,
     remove,
     update,
-    add
+    add,
+
 }
+
+
+
+
 
 async function query() {
     const collection = await dbService.getCollection('chat')
@@ -28,7 +33,7 @@ async function update(roomObj) {
     roomObj._id = ObjectId(roomObj._id);
 
     try {
-        await collection.replaceOne({"_id":roomObj._id}, {$set : roomObj})
+        await collection.replaceOne({ "_id": roomObj._id }, { $set: roomObj })
         return roomObj
     } catch (err) {
         console.log(`ERROR: cannot update roomObj ${roomObj._id}`)

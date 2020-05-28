@@ -1,4 +1,4 @@
-
+const userService = require('../user/user.service')
 module.exports = connectSockets
 function connectSockets(io) {
 
@@ -62,10 +62,35 @@ function connectSockets(io) {
             socket.to(socket.roomIdMap[roomKey]).emit('private_room_new_msg', data.msg)
         })
 
+        //// ONLINE USER SOCKETS
+        socket.on('USER_ONLINE', data => {
+            console.log('user Is online')
+
+            if (socket.onlineUsers[data._id]) {
+                socket.leave(socket.onlineUsers[data._id])
+            }
+            socket.join(data._id)
+
+        })
+
+        // socket.on('user_update', data => {
+        //     let roomKey = _getRoomById(data)
+        //     // console.log('some1 send a priv msg', msg.data.text, 'author', msg.data.author)
+        //     socket.to(socket.roomIdMap[roomKey]).emit('private_room_new_msg', data.msg)
+        // })
 
 
-
-
+        socket.on('login', (user) => {
+            userService.addUserToOnlineList(user)
+            let onlineUserList = userService.getOnlineUsers()
+            console.log("connectSockets -> onlineUserList", onlineUserList)
+        });
+        socket.on('logout', (user) => {
+            userService.removeUserToOnlineList(user)
+        });
+        socket.on('disconnect', (user) => {
+            userService.removeUserToOnlineList(user)
+        });
     });
 
 }

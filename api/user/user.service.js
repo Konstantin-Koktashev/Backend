@@ -9,9 +9,34 @@ module.exports = {
     getByEmail,
     remove,
     update,
-    add
+    add,
+    removeUserToOnlineList,
+    getOnlineUsers,
+    addUserToOnlineList
+}
+let onlineUsers = []
+
+
+
+
+
+function getOnlineUsers() {
+    console.log("getOnlineUsers -> onlineUsers", onlineUsers)
+    return JSON.stringify(onlineUsers)
 }
 
+function addUserToOnlineList(user) {
+    onlineUsers.push(user)
+    setTimeout(() => {
+        removeUserToOnlineList(user)
+    }, 1000 * 60 * 30);
+}
+function removeUserToOnlineList(user) {
+    let idx = onlineUsers.findIndex(onlineUser => {
+        user._id === onlineUser
+    })
+    onlineUsers.splice(idx, 1)
+}
 async function query(filterBy = {}) {
     const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('user')

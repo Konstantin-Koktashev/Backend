@@ -5,6 +5,12 @@ async function getUser(req, res) {
     const user = await userService.getById(req.params.id)
     res.send(user)
 }
+async function getOnlineUsers(req, res) {
+    const onlineUsers = userService.getOnlineUsers()
+    console.log("getOnlineUsers -> onlineUsers", onlineUsers)
+    logger.debug(onlineUsers);
+    res.send(onlineUsers)
+}
 
 async function getUsers(req, res) {
     // console.log(req.query);
@@ -28,5 +34,6 @@ module.exports = {
     getUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    getOnlineUsers
 }
