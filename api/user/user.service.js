@@ -92,6 +92,8 @@ async function remove(userId) {
 }
 
 async function update(user) {
+    console.log("update -> user", user)
+
     const collection = await dbService.getCollection('user')
     user._id = ObjectId(user._id);
 

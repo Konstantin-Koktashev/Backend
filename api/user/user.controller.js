@@ -25,7 +25,9 @@ async function deleteUser(req, res) {
 }
 
 async function updateUser(req, res) {
+
     const user = req.body;
+    console.log("updateUser -> user", user)
     await userService.update(user)
     res.send(user)
 }
