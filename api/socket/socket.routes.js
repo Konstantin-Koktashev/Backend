@@ -24,6 +24,7 @@ function connectSockets(io) {
         socket.on('join_board_room', boardId => {
             console.log('some1 joining to board room')
             if (socket.roomIdMap.boardRoom) {
+                console.log('IM LEAVEING A BOARD ROOM')
                 socket.leave(socket.roomIdMap.boardRoom)
             }
             socket.join(boardId)
@@ -45,8 +46,8 @@ function connectSockets(io) {
             console.log('some1 joining to privar room')
 
             let roomKey = _getRoomById(obj)
-            console.log("connectSockets -> roomKey", roomKey)
             if (socket.roomIdMap[roomKey]) {
+                console.log('IM LEAVEING A private ROOM')
                 socket.leave(socket.roomIdMap[roomKey])
             }
             socket.join(roomKey)
@@ -79,7 +80,7 @@ function connectSockets(io) {
 
 
 
-    
+
 }
 
 
