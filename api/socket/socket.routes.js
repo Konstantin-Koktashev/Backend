@@ -77,17 +77,7 @@ function connectSockets(io) {
             userService.removeUserToOnlineList(user)
         });
     });
-
-
-
-
 }
-
-
-
-
-
-
 function _getRoomById(obj) {
     let arr = [];
     arr.push(obj.id.myId)
